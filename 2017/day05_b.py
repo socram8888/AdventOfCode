@@ -1,0 +1,24 @@
+RP^FDC^3:?^6?G AJE9@?b
+
+R \\\ !2CE %H@ \\\
+
+R }@H[ E96 ;F>AD 2C6 6G6? DEC2?86Ci 27E6C 6249 ;F>A[ :7 E96 @77D6E H2D E9C66 @C >@C6[ :?DE625 564C62D6 :E 3J `] ~E96CH:D6[ :?4C62D6 :E 3J ` 2D 367@C6]
+
+R &D:?8 E9:D CF=6 H:E9 E96 23@G6 6I2>A=6[ E96 AC@46DD ?@H E2<6D `_ DE6AD[ 2?5 E96 @77D6E G2=F6D 27E6C 7:?5:?8 E96 6I:E 2C6 =67E 2D a b a b \`]
+
+R w@H >2?J DE6AD 5@6D :E ?@H E2<6 E@ C6249 E96 6I:En
+
+:>A@CE DJD
+
+>6>@CJ l ,:?EW=:?6X 7@C =:?6 :? DJD]DE5:?.
+A4 l _
+DE6AD l _
+
+H9:=6 A4 ml _ 2?5 A4 k =6?W>6>@CJXi
+	@=50A4 l A4
+	A4 Zl >6>@CJ,A4.
+
+	>6>@CJ,@=50A4. Zl W` :7 >6>@CJ,@=50A4. k b 6=D6 \`X
+	DE6AD Zl `
+
+AC:?EWDE6ADX
