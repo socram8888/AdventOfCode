@@ -1,31 +1,31 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ s2J ai r@CCFAE:@? r964<DF> \\\
+# --- Day 2: Corruption Checksum ---
 
-R pD J@F H2=< E9C@F89 E96 5@@C[ 2 8=@H:?8 9F>2?@:5 D92A6 J6==D :? J@FC 5:C64E:@?] Q*@F E96C6P *@FC DE2E6 2AA62CD E@ 36 :5=6] r@>6 96=A FD C6A2:C E96 4@CCFAE:@? :? E9:D DAC625D966E \ :7 H6 E2<6 2?@E96C >:==:D64@?5[ H6V== 92G6 E@ 5:DA=2J 2? 9@FC8=2DD 4FCD@CPQ
+# As you walk through the door, a glowing humanoid shape yells in your direction. "You there! Your state appears to be idle. Come help us repair the corruption in this spreadsheet - if we take another millisecond, we'll have to display an hourglass cursor!"
 
-R %96 DAC625D966E 4@?D:DED @7 C@HD @7 2AA2C6?E=J\C2?5@> ?F>36CD] %@ >2<6 DFC6 E96 C64@G6CJ AC@46DD :D @? E96 C:89E EC24<[ E96J ?665 J@F E@ 42=4F=2E6 E96 DAC625D966EVD 4964<DF>] u@C 6249 C@H[ 56E6C>:?6 E96 5:776C6?46 36EH66? E96 =2C86DE G2=F6 2?5 E96 D>2==6DE G2=F6j E96 4964<DF> :D E96 DF> @7 2== @7 E96D6 5:776C6?46D]
+# The spreadsheet consists of rows of apparently-random numbers. To make sure the recovery process is on the right track, they need you to calculate the spreadsheet's checksum. For each row, determine the difference between the largest value and the smallest value; the checksum is the sum of all of these differences.
 
-R u@C 6I2>A=6[ 8:G6? E96 7@==@H:?8 DAC625D966Ei
+# For example, given the following spreadsheet:
 
-R d ` h d
-R f d b
-R a c e g
+# 5 1 9 5
+# 7 5 3
+# 2 4 6 8
 
-    R %96 7:CDE C@HVD =2C86DE 2?5 D>2==6DE G2=F6D 2C6 h 2?5 `[ 2?5 E96:C 5:776C6?46 :D g]
-    R %96 D64@?5 C@HVD =2C86DE 2?5 D>2==6DE G2=F6D 2C6 f 2?5 b[ 2?5 E96:C 5:776C6?46 :D c]
-    R %96 E9:C5 C@HVD 5:776C6?46 :D e]
+    # The first row's largest and smallest values are 9 and 1, and their difference is 8.
+    # The second row's largest and smallest values are 7 and 3, and their difference is 4.
+    # The third row's difference is 6.
 
-R x? E9:D 6I2>A=6[ E96 DAC625D966EVD 4964<DF> H@F=5 36 g Z c Z e l `g]
+# In this example, the spreadsheet's checksum would be 8 + 4 + 6 = 18.
 
-R (92E :D E96 4964<DF> 7@C E96 DAC625D966E :? J@FC AFKK=6 :?AFEn
+# What is the checksum for the spreadsheet in your puzzle input?
 
-:>A@CE DJD
+import sys
 
-4964<DF> l _
+checksum = 0
 
-7@C =:?6 :? DJD]DE5:?i 
-	=:?6 l ,:?EWIX 7@C I :? =:?6]DA=:EWX.
-	4964<DF> Zl >2IW=:?6X \ >:?W=:?6X
+for line in sys.stdin: 
+	line = [int(x) for x in line.split()]
+	checksum += max(line) - min(line)
 
-AC:?EW4964<DF>X
+print(checksum)

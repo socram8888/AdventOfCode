@@ -1,35 +1,35 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-:>A@CE DJD
-7C@> >2E9 :>A@CE DBCE[ 46:=
+import sys
+from math import sqrt, ceil
 
-7@C 255C6DD :? DJD]DE5:?i
-	255C6DD l :?EW255C6DDX
+for address in sys.stdin:
+	address = int(address)
 
-	R %9:D >249:?6VD >6>@CJ :D 2 >2EC:I H9@D6 D:K6 :D :?4C62D65 3J @?6 :? 6249
-	R 5:C64E:@? WFA[ 5@H?[ =67E 2?5 C:89EX H96?6G6C :E CF?D @FE @7 >6>@CJ
-	R
-	R x? :E6C2E:@? _[ H6 92G6 @?=J E96 46?E6C 46==[ D@ E96 >2EC:IVD D:K6 :D `I`
-	R x? :E6C2E:@? `[ E96 >2EC:I D:K6 :D bIb] xE6C2E:@? a[ dId] xE6C2E:@? b[ fIf]]]
-	R
-	R %9FD[ H6 42? 567:?6 E96 >2EC:I D:K6[ @C ?F>36C @7 255C6DD6D[ E@ 36 2lWa:Z`X/a 7@C :E6C2E:@? :
-	R $@=G:?8 E96 23@G6 6BF2E:@? 7@C Q:Q[ H6 86E E92E :lWDBCEW2X\`X^a
-	R
-	R %9:D >62?D E92E 2? 255C6DD Q2Q H:== 2AA62C :? :E6C2E:@? :l46:=WWDBCEW2X\`X^aX
-	:E6C2E:@? l 46:=WWDBCEW255C6DDX \ `X ^ aX
+	# This machine's memory is a matrix whose size is increased by one in each
+	# direction (up, down, left and right) whenever it runs out of memory
+	#
+	# In iteration 0, we have only the center cell, so the matrix's size is 1x1
+	# In iteration 1, the matrix size is 3x3. Iteration 2, 5x5. Iteration 3, 7x7...
+	#
+	# Thus, we can define the matrix size, or number of addresses, to be a=(2i+1)^2 for iteration i
+	# Solving the above equation for "i", we get that i=(sqrt(a)-1)/2
+	#
+	# This means that an address "a" will appear in iteration i=ceil((sqrt(a)-1)/2)
+	iteration = ceil((sqrt(address) - 1) / 2)
 
-	R (6V== DF3DEC24E E96 AC6G:@FD :E6C2E:@? >2EC:I D:K6[ 2?5 DF3DEC24E :E 7C@> E96 255C6DD[
-	R 4@?G6CE:?8 E96 255C6DD E@ 2 _\32D65 @77D6E 7C@> AC6G:@FD :E6C2E:@? D:K6
-	@77D6E l 255C6DD \ Wa Y :E6C2E:@? \ `X YY a \ `
+	# We'll substract the previous iteration matrix size, and substract it from the address,
+	# converting the address to a 0-based offset from previous iteration size
+	offset = address - (2 * iteration - 1) ** 2 - 1
 
-	R t>A:C:42==J[ xVG6 @3D6CG65 E92E E96 @77D6E 42? ?@H 36 5:G:565 :? 6:89E A2CED W7C@> ` E@ gX[
-	R H:E9 6G6? 2?5 @55 A2CED 92G:?8 2 5:776C6?E H2J @7 42=4F=2E:?8 E96 ?F>36C @7 DE6AD
-	6G6? l W@77D6E ^^ :E6C2E:@?X T a ll _
+	# Empirically, I've observed that the offset can now be divided in eight parts (from 1 to 8),
+	# with even and odd parts having a different way of calculating the number of steps
+	even = (offset // iteration) % 2 == 0
 
-	R $66 52J_b];A8 7@C 2? 6IA=2?2E:@? @7 E96D6
-	:7 6G6?i
-		DE6AD l a Y :E6C2E:@? \ @77D6E T :E6C2E:@? \ `
-	6=D6i
-		DE6AD l :E6C2E:@? Z @77D6E T :E6C2E:@? Z `
+	# See day03.jpg for an explanation of these
+	if even:
+		steps = 2 * iteration - offset % iteration - 1
+	else:
+		steps = iteration + offset % iteration + 1
 
-	AC:?EWDE6ADX
+	print(steps)

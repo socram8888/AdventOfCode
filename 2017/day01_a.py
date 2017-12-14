@@ -1,40 +1,40 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ s2J `i x?G6CD6 r2AE492 \\\
+# --- Day 1: Inverse Captcha ---
 
-R %96 ?:89E 367@C6 r9C:DE>2D[ @?6 @7 $2?E2VD t=G6D 42==D J@F :? 2 A2?:4] Q%96 AC:?E6CVD 3C@<6?P (6 42?VE AC:?E E96 }2F89EJ @C }:46 {:DEPQ qJ E96 E:>6 J@F >2<6 :E E@ DF3\32D6>6?E `f[ E96C6 2C6 @?=J 2 76H >:?FE6D F?E:= >:5?:89E] Q(6 92G6 2 3:8 AC@3=6>[Q D96 D2JDj QE96C6 >FDE 36 2=>@DE 7:7EJ 3F8D :? E9:D DJDE6>[ 3FE ?@E9:?8 6=D6 42? AC:?E %96 {:DE] $E2?5 :? E9:D DBF2C6[ BF:4<P %96C6VD ?@ E:>6 E@ 6IA=2:?j :7 J@F 42? 4@?G:?46 E96> E@ A2J J@F :? DE2CD[ J@FV== 36 23=6 E@\\Q $96 AF==D 2 =6G6C 2?5 E96 H@C=5 8@6D 3=FCCJ]
+# The night before Christmas, one of Santa's Elves calls you in a panic. "The printer's broken! We can't print the Naughty or Nice List!" By the time you make it to sub-basement 17, there are only a few minutes until midnight. "We have a big problem," she says; "there must be almost fifty bugs in this system, but nothing else can print The List. Stand in this square, quick! There's no time to explain; if you can convince them to pay you in stars, you'll be able to--" She pulls a lever and the world goes blurry.
 
-R (96? J@FC 6J6D 42? 7@4FD 282:?[ 6G6CJE9:?8 D66>D 2 =@E >@C6 A:I6=2E65 E92? 367@C6] $96 >FDE 92G6 D6?E J@F :?D:56 E96 4@>AFE6CP *@F 4964< E96 DJDE6> 4=@4<i ad >:==:D64@?5D F?E:= >:5?:89E] (:E9 E92E >F49 E:>6[ J@F D9@F=5 36 23=6 E@ 4@==64E 2== 7:7EJ DE2CD 3J s646>36C adE9]
+# When your eyes can focus again, everything seems a lot more pixelated than before. She must have sent you inside the computer! You check the system clock: 25 milliseconds until midnight. With that much time, you should be able to collect all fifty stars by December 25th.
 
-R r@==64E DE2CD 3J D@=G:?8 AFKK=6D] %H@ AFKK=6D H:== 36 >256 2G2:=23=6 @? 6249 52J >:==:D64@?5 :? E96 25G6?E 42=6?52Cj E96 D64@?5 AFKK=6 :D F?=@4<65 H96? J@F 4@>A=6E6 E96 7:CDE] t249 AFKK=6 8C2?ED @?6 DE2C] v@@5 =F4<P
+# Collect stars by solving puzzles. Two puzzles will be made available on each day millisecond in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
-R *@FVC6 DE2?5:?8 :? 2 C@@> H:E9 Q5:8:E:K2E:@? BF2C2?E:?6Q HC:EE6? :? {tsD 2=@?8 @?6 H2==] %96 @?=J 5@@C :D =@4<65[ 3FE :E :?4=F56D 2 D>2== :?E6C7246] Q#6DEC:4E65 pC62 \ $EC:4E=J }@ s:8:E:K65 &D6CD p==@H65]Q
+# You're standing in a room with "digitization quarantine" written in LEDs along one wall. The only door is locked, but it includes a small interface. "Restricted Area - Strictly No Digitized Users Allowed."
 
-R xE 8@6D @? E@ 6IA=2:? E92E J@F >2J @?=J =62G6 3J D@=G:?8 2 42AE492 E@ AC@G6 J@FVC6 ?@E 2 9F>2?] pAA2C6?E=J[ J@F @?=J 86E @?6 >:==:D64@?5 E@ D@=G6 E96 42AE492i E@@ 72DE 7@C 2 ?@C>2= 9F>2?[ 3FE :E 766=D =:<6 9@FCD E@ J@F]
+# It goes on to explain that you may only leave by solving a captcha to prove you're not a human. Apparently, you only get one millisecond to solve the captcha: too fast for a normal human, but it feels like hours to you.
 
-R %96 42AE492 C6BF:C6D J@F E@ C6G:6H 2 D6BF6?46 @7 5:8:ED WJ@FC AFKK=6 :?AFEX 2?5 7:?5 E96 DF> @7 2== 5:8:ED E92E >2E49 E96 ?6IE 5:8:E :? E96 =:DE] %96 =:DE :D 4:C4F=2C[ D@ E96 5:8:E 27E6C E96 =2DE 5:8:E :D E96 7:CDE 5:8:E :? E96 =:DE]
+# The captcha requires you to review a sequence of digits (your puzzle input) and find the sum of all digits that match the next digit in the list. The list is circular, so the digit after the last digit is the first digit in the list.
 
-R u@C 6I2>A=6i
+# For example:
 
-    R ``aa AC@5F46D 2 DF> @7 b W` Z aX 3642FD6 E96 7:CDE 5:8:E W`X >2E496D E96 D64@?5 5:8:E 2?5 E96 E9:C5 5:8:E WaX >2E496D E96 7@FCE9 5:8:E]
-    R ```` AC@5F46D c 3642FD6 6249 5:8:E W2== `X >2E496D E96 ?6IE]
-    R `abc AC@5F46D _ 3642FD6 ?@ 5:8:E >2E496D E96 ?6IE]
-    R h`a`a`ah AC@5F46D h 3642FD6 E96 @?=J 5:8:E E92E >2E496D E96 ?6IE @?6 :D E96 =2DE 5:8:E[ h]
+    # 1122 produces a sum of 3 (1 + 2) because the first digit (1) matches the second digit and the third digit (2) matches the fourth digit.
+    # 1111 produces 4 because each digit (all 1) matches the next.
+    # 1234 produces 0 because no digit matches the next.
+    # 91212129 produces 9 because the only digit that matches the next one is the last digit, 9.
 
-R (92E :D E96 D@=FE:@? E@ J@FC 42AE492n
+# What is the solution to your captcha?
 
-:>A@CE DJD
+import sys
 
-7@C =:?6 :? DJD]DE5:?i
-	=:?6 l =:?6]DEC:AWX
-	=:?6 Zl =:?6,_.
+for line in sys.stdin:
+	line = line.strip()
+	line += line[0]
 
-	DF> l _
-	AC6G:@FD l \`
-	7@C 5:8:E :? =:?6i
-		4FC l :?EW5:8:EX
-		:7 4FC ll AC6G:@FDi
-			DF> Zl 4FC
-		AC6G:@FD l 4FC
+	sum = 0
+	previous = -1
+	for digit in line:
+		cur = int(digit)
+		if cur == previous:
+			sum += cur
+		previous = cur
 
-	AC:?EWDF>X
+	print(sum)

@@ -1,39 +1,39 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-:>A@CE DJD
+import sys
 
-7@C DEC62> :? DJD]DE5:?i
-	D4@C6 l _
-	56AE9 l _
-	:D082C3286 l u2=D6
-	:D0D<:AA65 l u2=D6
-	@77D6E l _
-	82C32860492CD l _
+for stream in sys.stdin:
+	score = 0
+	depth = 0
+	is_garbage = False
+	is_skipped = False
+	offset = 0
+	garbage_chars = 0
 
-	7@C 492C :? DEC62>]DEC:AWXi
-		AC:?EWV$iT5 siT5 viT5 $iT5 riTDV T WD4@C6[ 56AE9[ :?EW:D082C3286X[ :?EW:D0D<:AA65X[ 492CXX
-		:7 :D0D<:AA65i
-			:D0D<:AA65 l u2=D6
-		6=:7 492C ll VPVi
-			:D0D<:AA65 l %CF6
-		6=:7 :D082C3286i
-			:7 492C ll VmVi
-				:D082C3286 l u2=D6
-			6=D6i
-				82C32860492CD Zl `
-		6=:7 492C ll VLVi
-			56AE9 Zl `
-		6=:7 492C ll VNVi
-			D4@C6 Zl 56AE9
-			56AE9 \l `
-		6=:7 492C ll VkVi
-			:D082C3286 l %CF6
-		6=:7 492C ll V[Vi
-			A2DD
-		6=D6i
-			C2:D6 tI46AE:@?WV&?6IA64E65 492C24E6C QTDQ 2E @77D6E T5V T W492C[ @77D6EXX
+	for char in stream.strip():
+		print('S:%d D:%d G:%d S:%d C:%s' % (score, depth, int(is_garbage), int(is_skipped), char))
+		if is_skipped:
+			is_skipped = False
+		elif char == '!':
+			is_skipped = True
+		elif is_garbage:
+			if char == '>':
+				is_garbage = False
+			else:
+				garbage_chars += 1
+		elif char == '{':
+			depth += 1
+		elif char == '}':
+			score += depth
+			depth -= 1
+		elif char == '<':
+			is_garbage = True
+		elif char == ',':
+			pass
+		else:
+			raise Exception('Unexpected character "%s" at offset %d' % (char, offset))
 
-		@77D6E Zl `
+		offset += 1
 
-	AC:?EWV$4@C6i T:V T D4@C6X
-	AC:?EWVv2C3286 492CDi T:V T 82C32860492CDX
+	print('Score: %i' % score)
+	print('Garbage chars: %i' % garbage_chars)

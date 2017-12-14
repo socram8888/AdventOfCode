@@ -1,57 +1,57 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ s2J ei |6>@CJ #62==@42E:@? \\\
+# --- Day 6: Memory Reallocation ---
 
-R p 563F886C AC@8C2> 96C6 :D 92G:?8 2? :DDF6i :E :D ECJ:?8 E@ C6A2:C 2 >6>@CJ C62==@42E:@? C@FE:?6[ 3FE :E <66AD 86EE:?8 DEF4< :? 2? :?7:?:E6 =@@A]
+# A debugger program here is having an issue: it is trying to repair a memory reallocation routine, but it keeps getting stuck in an infinite loop.
 
-R x? E9:D 2C62[ E96C6 2C6 D:IE66? >6>@CJ 32?<Dj 6249 >6>@CJ 32?< 42? 9@=5 2?J ?F>36C @7 3=@4<D] %96 8@2= @7 E96 C62==@42E:@? C@FE:?6 :D E@ 32=2?46 E96 3=@4<D 36EH66? E96 >6>@CJ 32?<D]
+# In this area, there are sixteen memory banks; each memory bank can hold any number of blocks. The goal of the reallocation routine is to balance the blocks between the memory banks.
 
-R %96 C62==@42E:@? C@FE:?6 @A6C2E6D :? 4J4=6D] x? 6249 4J4=6[ :E 7:?5D E96 >6>@CJ 32?< H:E9 E96 >@DE 3=@4<D WE:6D H@? 3J E96 =@H6DE\?F>36C65 >6>@CJ 32?<X 2?5 C65:DEC:3FE6D E9@D6 3=@4<D 2>@?8 E96 32?<D] %@ 5@ E9:D[ :E C6>@G6D 2== @7 E96 3=@4<D 7C@> E96 D6=64E65 32?<[ E96? >@G6D E@ E96 ?6IE W3J :?56IX >6>@CJ 32?< 2?5 :?D6CED @?6 @7 E96 3=@4<D] xE 4@?E:?F6D 5@:?8 E9:D F?E:= :E CF?D @FE @7 3=@4<Dj :7 :E C62496D E96 =2DE >6>@CJ 32?<[ :E HC2AD 2C@F?5 E@ E96 7:CDE @?6]
+# The reallocation routine operates in cycles. In each cycle, it finds the memory bank with the most blocks (ties won by the lowest-numbered memory bank) and redistributes those blocks among the banks. To do this, it removes all of the blocks from the selected bank, then moves to the next (by index) memory bank and inserts one of the blocks. It continues doing this until it runs out of blocks; if it reaches the last memory bank, it wraps around to the first one.
 
-R %96 563F886C H@F=5 =:<6 E@ <?@H 9@H >2?J C65:DEC:3FE:@?D 42? 36 5@?6 367@C6 2 3=@4<D\:?\32?<D 4@?7:8FC2E:@? :D AC@5F465 E92E 92D 366? D66? 367@C6]
+# The debugger would like to know how many redistributions can be done before a blocks-in-banks configuration is produced that has been seen before.
 
-R u@C 6I2>A=6[ :>28:?6 2 D46?2C:@ H:E9 @?=J 7@FC >6>@CJ 32?<Di
+# For example, imagine a scenario with only four memory banks:
 
-    R %96 32?<D DE2CE H:E9 _[ a[ f[ 2?5 _ 3=@4<D] %96 E9:C5 32?< 92D E96 >@DE 3=@4<D[ D@ :E :D 49@D6? 7@C C65:DEC:3FE:@?]
-    R $E2CE:?8 H:E9 E96 ?6IE 32?< WE96 7@FCE9 32?<X 2?5 E96? 4@?E:?F:?8 E@ E96 7:CDE 32?<[ E96 D64@?5 32?<[ 2?5 D@ @?[ E96 f 3=@4<D 2C6 DAC625 @FE @G6C E96 >6>@CJ 32?<D] %96 7@FCE9[ 7:CDE[ 2?5 D64@?5 32?<D 86E EH@ 3=@4<D 6249[ 2?5 E96 E9:C5 32?< 86ED @?6 324<] %96 7:?2= C6DF=E =@@<D =:<6 E9:Di a c ` a]
-    R }6IE[ E96 D64@?5 32?< :D 49@D6? 3642FD6 :E 4@?E2:?D E96 >@DE 3=@4<D W7@FCX] q642FD6 E96C6 2C6 7@FC >6>@CJ 32?<D[ 6249 86ED @?6 3=@4<] %96 C6DF=E :Di b ` a b]
-    R }@H[ E96C6 :D 2 E:6 36EH66? E96 7:CDE 2?5 7@FCE9 >6>@CJ 32?<D[ 3@E9 @7 H9:49 92G6 E9C66 3=@4<D] %96 7:CDE 32?< H:?D E96 E:6[ 2?5 :ED E9C66 3=@4<D 2C6 5:DEC:3FE65 6G6?=J @G6C E96 @E96C E9C66 32?<D[ =62G:?8 :E H:E9 ?@?6i _ a b c]
-    R %96 7@FCE9 32?< :D 49@D6?[ 2?5 :ED 7@FC 3=@4<D 2C6 5:DEC:3FE65 DF49 E92E 6249 @7 E96 7@FC 32?<D C646:G6D @?6i ` b c `]
-    R %96 E9:C5 32?< :D 49@D6?[ 2?5 E96 D2>6 E9:?8 92AA6?Di a c ` a]
+    # The banks start with 0, 2, 7, and 0 blocks. The third bank has the most blocks, so it is chosen for redistribution.
+    # Starting with the next bank (the fourth bank) and then continuing to the first bank, the second bank, and so on, the 7 blocks are spread out over the memory banks. The fourth, first, and second banks get two blocks each, and the third bank gets one back. The final result looks like this: 2 4 1 2.
+    # Next, the second bank is chosen because it contains the most blocks (four). Because there are four memory banks, each gets one block. The result is: 3 1 2 3.
+    # Now, there is a tie between the first and fourth memory banks, both of which have three blocks. The first bank wins the tie, and its three blocks are distributed evenly over the other three banks, leaving it with none: 0 2 3 4.
+    # The fourth bank is chosen, and its four blocks are distributed such that each of the four banks receives one: 1 3 4 1.
+    # The third bank is chosen, and the same thing happens: 2 4 1 2.
 
-R pE E9:D A@:?E[ H6VG6 C624965 2 DE2E6 H6VG6 D66? 367@C6i a c ` a H2D 2=C625J D66?] %96 :?7:?:E6 =@@A :D 56E64E65 27E6C E96 7:7E9 3=@4< C65:DEC:3FE:@? 4J4=6[ 2?5 D@ E96 2?DH6C :? E9:D 6I2>A=6 :D d]
+# At this point, we've reached a state we've seen before: 2 4 1 2 was already seen. The infinite loop is detected after the fifth block redistribution cycle, and so the answer in this example is 5.
 
-R v:G6? E96 :?:E:2= 3=@4< 4@F?ED :? J@FC AFKK=6 :?AFE[ 9@H >2?J C65:DEC:3FE:@? 4J4=6D >FDE 36 4@>A=6E65 367@C6 2 4@?7:8FC2E:@? :D AC@5F465 E92E 92D 366? D66? 367@C6n
+# Given the initial block counts in your puzzle input, how many redistribution cycles must be completed before a configuration is produced that has been seen before?
 
-R \\\ !2CE %H@ \\\
+# --- Part Two ---
 
-R ~FE @7 4FC:@D:EJ[ E96 563F886C H@F=5 2=D@ =:<6 E@ <?@H E96 D:K6 @7 E96 =@@Ai DE2CE:?8 7C@> 2 DE2E6 E92E 92D 2=C625J 366? D66?[ 9@H >2?J 3=@4< C65:DEC:3FE:@? 4J4=6D >FDE 36 A6C7@C>65 367@C6 E92E D2>6 DE2E6 :D D66? 282:?n
+# Out of curiosity, the debugger would also like to know the size of the loop: starting from a state that has already been seen, how many block redistribution cycles must be performed before that same state is seen again?
 
-R x? E96 6I2>A=6 23@G6[ a c ` a :D D66? 282:? 27E6C 7@FC 4J4=6D[ 2?5 D@ E96 2?DH6C :? E92E 6I2>A=6 H@F=5 36 c]
+# In the example above, 2 4 1 2 is seen again after four cycles, and so the answer in that example would be 4.
 
-R w@H >2?J 4J4=6D 2C6 :? E96 :?7:?:E6 =@@A E92E 2C:D6D 7C@> E96 4@?7:8FC2E:@? :? J@FC AFKK=6 :?AFEn
+# How many cycles are in the infinite loop that arises from the configuration in your puzzle input?
 
-:>A@CE DJD
+import sys
 
-7@C =:?6 :? DJD]DE5:?i
-	DE2EFD l ,:?EWIX 7@C I :? =:?6]DA=:EWX.
-	DE2EFDEFA=6 l EFA=6WDE2EFDX
-	=@8 l =:DEWX
+for line in sys.stdin:
+	status = [int(x) for x in line.split()]
+	statustuple = tuple(status)
+	log = list()
 
-	H9:=6 DE2EFDEFA=6 ?@E :? =@8i
-		AC:?EWV$E6A T:i TDV T W=6?W=@8X[ C6ACWDE2EFDEFA=6XXX
-		=@8]2AA6?5WDE2EFDEFA=6X
+	while statustuple not in log:
+		print('Step %i: %s' % (len(log), repr(statustuple)))
+		log.append(statustuple)
 
-		A@D[ >2IG2= l >2IW6?F>6C2E6WDE2EFDX[ <6Jl=2>352 Ii I,`.X
-		DE2EFD,A@D. l _
+		pos, maxval = max(enumerate(status), key=lambda x: x[1])
+		status[pos] = 0
 
-		H9:=6 >2IG2= m _i
-			A@D l WA@D Z `X T =6?WDE2EFDX
-			DE2EFD,A@D. Zl `
-			>2IG2= \l `
+		while maxval > 0:
+			pos = (pos + 1) % len(status)
+			status[pos] += 1
+			maxval -= 1
 
-		DE2EFDEFA=6 l EFA=6WDE2EFDX
+		statustuple = tuple(status)
 
-	AC:?EWVu:?2=i V Z C6ACWDE2EFDEFA=6XX
-	AC:?EWV$E6ADi T:V T =6?W=@8XX
-	AC:?EWV{@@A D:K6i T:V T W=6?W=@8X \ =@8]:?56IWDE2EFDEFA=6XXX
+	print('Final: ' + repr(statustuple))
+	print('Steps: %i' % len(log))
+	print('Loop size: %i' % (len(log) - log.index(statustuple)))

@@ -1,73 +1,73 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ !2CE %H@ \\\
+# --- Part Two ---
 
-R pD 2 DEC6DD E6DE @? E96 DJDE6>[ E96 AC@8C2>D 96C6 4=62C E96 8C:5 2?5 E96? DE@C6 E96 G2=F6 ` :? DBF2C6 `] %96?[ :? E96 D2>6 2==@42E:@? @C56C 2D D9@H? 23@G6[ E96J DE@C6 E96 DF> @7 E96 G2=F6D :? 2== 25;246?E DBF2C6D[ :?4=F5:?8 5:28@?2=D]
+# As a stress test on the system, the programs here clear the grid and then store the value 1 in square 1. Then, in the same allocation order as shown above, they store the sum of the values in all adjacent squares, including diagonals.
 
-R $@[ E96 7:CDE 76H DBF2C6DV G2=F6D 2C6 49@D6? 2D 7@==@HDi
+# So, the first few squares' values are chosen as follows:
 
-R $BF2C6 ` DE2CED H:E9 E96 G2=F6 `]
-R $BF2C6 a 92D @?=J @?6 25;246?E 7:==65 DBF2C6 WH:E9 G2=F6 `X[ D@ :E 2=D@ DE@C6D `]
-R $BF2C6 b 92D 3@E9 @7 E96 23@G6 DBF2C6D 2D ?6:893@CD 2?5 DE@C6D E96 DF> @7 E96:C G2=F6D[ a]
-R $BF2C6 c 92D 2== E9C66 @7 E96 27@C6>6?E:@?65 DBF2C6D 2D ?6:893@CD 2?5 DE@C6D E96 DF> @7 E96:C G2=F6D[ c]
-R $BF2C6 d @?=J 92D E96 7:CDE 2?5 7@FCE9 DBF2C6D 2D ?6:893@CD[ D@ :E 86ED E96 G2=F6 d]
-R ~?46 2 DBF2C6 :D HC:EE6?[ :ED G2=F6 5@6D ?@E 492?86] %96C67@C6[ E96 7:CDE 76H DBF2C6D H@F=5 C646:G6 E96 7@==@H:?8 G2=F6Di
+# Square 1 starts with the value 1.
+# Square 2 has only one adjacent filled square (with value 1), so it also stores 1.
+# Square 3 has both of the above squares as neighbors and stores the sum of their values, 2.
+# Square 4 has all three of the aforementioned squares as neighbors and stores the sum of their values, 4.
+# Square 5 only has the first and fourth squares as neighbors, so it gets the value 5.
+# Once a square is written, its value does not change. Therefore, the first few squares would receive the following values:
 
-R `cf  `ca  `bb  `aa   dh
-R b_c    d    c    a   df
-R bb_   `_    `    `   dc
-R bd`   ``   ab   ad   ae
-R bea  fcf  g_e\\\m   ]]]
-R (92E :D E96 7:CDE G2=F6 HC:EE6? E92E :D =2C86C E92? J@FC AFKK=6 :?AFEn
+# 147  142  133  122   59
+# 304    5    4    2   57
+# 330   10    1    1   54
+# 351   11   23   25   26
+# 362  747  806--->   ...
+# What is the first value written that is larger than your puzzle input?
 
-:>A@CE DJD
+import sys
 
-4=2DD s:C64E:@?i
-	567 00:?:E00WD6=7[ ?2>6[ DE6ADXi
-		D6=7]?2>6 l ?2>6
-		D6=7]DE6AD l DE6AD
+class Direction:
+	def __init__(self, name, steps):
+		self.name = name
+		self.steps = steps
 		
-	567 :?4C6>6?EWD6=7[ A@DXi
-		C6EFC? WA@D,_. Z D6=7]DE6AD,_.[ A@D,`. Z D6=7]DE6AD,`.X
+	def increment(self, pos):
+		return (pos[0] + self.steps[0], pos[1] + self.steps[1])
 
-|p%#x)0$xst l `d
-sx#tr%x~}$ l ,
-	s:C64E:@?WQt2DEQ[  WZ`[ _XX[
-	s:C64E:@?WQ}@CE9Q[ W_[ \`XX[
-	s:C64E:@?WQ(6DEQ[  W\`[ _XX[
-	s:C64E:@?WQ$@FE9Q[ W_[ Z`XX
-.
+MATRIX_SIDE = 15
+DIRECTIONS = [
+	Direction("East",  (+1, 0)),
+	Direction("North", (0, -1)),
+	Direction("West",  (-1, 0)),
+	Direction("South", (0, +1))
+]
 
-7@C E2C86E :? DJD]DE5:?i
-	E2C86E l :?EWE2C86EX
+for target in sys.stdin:
+	target = int(target)
 
-	A@D l W|p%#x)0$xst ^^ a[ X Y a
-	>2EC:I l ,,_. Y |p%#x)0$xst 7@C I :? C2?86W|p%#x)0$xstX.
-	>2EC:I,A@D,`..,A@D,_.. l 46==DF> l `
+	pos = (MATRIX_SIDE // 2, ) * 2
+	matrix = [[0] * MATRIX_SIDE for x in range(MATRIX_SIDE)]
+	matrix[pos[1]][pos[0]] = cellsum = 1
 
-	5:C64E:@? l _
-	5:C64E:@?0DE6AD l `
-	EFC?D0F?E:=0:?4C62D6 l a
-	DE6AD0A6C05:C64E:@? l `
+	direction = 0
+	direction_steps = 1
+	turns_until_increase = 2
+	steps_per_direction = 1
 
-	H9:=6 46==DF> k E2C86Ei
-		AC:?EWVTD T: TD T: T: T:V T WC6ACWA@DX[ 46==DF>[ sx#tr%x~}$,5:C64E:@?.]?2>6[ 5:C64E:@?0DE6AD[ EFC?D0F?E:=0:?4C62D6[ DE6AD0A6C05:C64E:@?XX
-		A@D l sx#tr%x~}$,5:C64E:@?.]:?4C6>6?EWA@DX
-		5:C64E:@?0DE6AD \l `
-		:7 5:C64E:@?0DE6AD ll _i
-			EFC?D0F?E:=0:?4C62D6 \l `
-			:7 EFC?D0F?E:=0:?4C62D6 ll _i
-				DE6AD0A6C05:C64E:@? Zl `
-				EFC?D0F?E:=0:?4C62D6 l a
+	while cellsum < target:
+		print('%s %i %s %i %i %i' % (repr(pos), cellsum, DIRECTIONS[direction].name, direction_steps, turns_until_increase, steps_per_direction))
+		pos = DIRECTIONS[direction].increment(pos)
+		direction_steps -= 1
+		if direction_steps == 0:
+			turns_until_increase -= 1
+			if turns_until_increase == 0:
+				steps_per_direction += 1
+				turns_until_increase = 2
 
-			5:C64E:@?0DE6AD l DE6AD0A6C05:C64E:@?
-			5:C64E:@? l W5:C64E:@? Z `X T c
+			direction_steps = steps_per_direction
+			direction = (direction + 1) % 4
 
-		46==DF> l _
-		7@C J0C6= :? ,\`[ _[ `.i
-			7@C I0C6= :? ,\`[ _[ `.i
-				46==DF> Zl >2EC:I,A@D,`. Z J0C6=.,A@D,_. Z I0C6=.
+		cellsum = 0
+		for y_rel in [-1, 0, 1]:
+			for x_rel in [-1, 0, 1]:
+				cellsum += matrix[pos[1] + y_rel][pos[0] + x_rel]
 						
-		>2EC:I,A@D,`..,A@D,_.. l 46==DF>
+		matrix[pos[1]][pos[0]] = cellsum
 
-	AC:?EWVTD T: TD T: T: T:V T WC6ACWA@DX[ 46==DF>[ sx#tr%x~}$,5:C64E:@?.]?2>6[ 5:C64E:@?0DE6AD[ EFC?D0F?E:=0:?4C62D6[ DE6AD0A6C05:C64E:@?XX
+	print('%s %i %s %i %i %i' % (repr(pos), cellsum, DIRECTIONS[direction].name, direction_steps, turns_until_increase, steps_per_direction))

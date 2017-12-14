@@ -1,28 +1,28 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-:>A@CE DJD
+import sys
 
-wp$w0{t} l ade
+HASH_LEN = 256
 
-7@C =:?6 :? DJD]DE5:?i
-	=6?8E9D l ,:?EWIX 7@C I :? =:?6]DEC:AWX]DA=:EWQ[QX.
+for line in sys.stdin:
+	lengths = [int(x) for x in line.strip().split(",")]
 	
-	<?@ED l =:DEWC2?86Wwp$w0{t}XX
-	D<:A l _
-	@77D6E l _
-	7@C =6?8E9 :? =6?8E9Di
-		AC:?EWV{6?i T5V T =6?8E9X
-		7@C : :? C2?86W=6?8E9 ^^ aXi
-			A@D02 l W@77D6E Z :X T wp$w0{t}
-			A@D03 l W@77D6E Z =6?8E9 \ : \ `X T wp$w0{t}
-			AC:?EWV$H2A T5 k\m T5V T WA@D02[ A@D03XX
+	knots = list(range(HASH_LEN))
+	skip = 0
+	offset = 0
+	for length in lengths:
+		print('Len: %d' % length)
+		for i in range(length // 2):
+			pos_a = (offset + i) % HASH_LEN
+			pos_b = (offset + length - i - 1) % HASH_LEN
+			print('Swap %d <-> %d' % (pos_a, pos_b))
 
-			R $H2A E96>
-			<?@ED,A@D02.[ <?@ED,A@D03. l <?@ED,A@D03.[ <?@ED,A@D02.
+			# Swap them
+			knots[pos_a], knots[pos_b] = knots[pos_b], knots[pos_a]
 
-		@77D6E l W@77D6E Z =6?8E9 Z D<:AX T wp$w0{t}
-		D<:A l WD<:A Z `X T wp$w0{t}
+		offset = (offset + length + skip) % HASH_LEN
+		skip = (skip + 1) % HASH_LEN
 
-		AC:?EWV$E2EFDi TDV T C6ACW<?@EDXX
+		print('Status: %s' % repr(knots))
 
-	AC:?EWVu:?2=i TDV T C6ACW<?@EDXX
+	print('Final: %s' % repr(knots))

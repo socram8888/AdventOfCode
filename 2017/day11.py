@@ -1,36 +1,36 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-:>A@CE DJD
+import sys
 
-7@C =:?6 :? DJD]DE5:?i
-	>@G6D l =:?6]DEC:AWX]DA=:EWV[VX
-	I l J l _
-	>@DE072C l _
+for line in sys.stdin:
+	moves = line.strip().split(',')
+	x = y = 0
+	most_far = 0
 
-	7@C >@G6 :? >@G6Di
-		:7 >@G6 ll V?Vi
-			J Zl `
-		6=:7 >@G6 ll VDVi
-			J \l `
-		6=D6i
-			@77D6E l I U `
-			:7 >@G6,_. ll V?Vi
-				J Zl @77D6E
-			6=:7 >@G6,_. ll VDVi
-				J \l ` \ @77D6E
-			6=D6i
-				C2:D6 tI46AE:@?WVx?G2=:5 5:C64E:@?i TDV T C6ACW>@G6XX
+	for move in moves:
+		if move == 'n':
+			y += 1
+		elif move == 's':
+			y -= 1
+		else:
+			offset = x & 1
+			if move[0] == 'n':
+				y += offset
+			elif move[0] == 's':
+				y -= 1 - offset
+			else:
+				raise Exception('Invalid direction: %s' % repr(move))
 
-			:7 >@G6,`. ll VHVi
-				I \l `
-			6=:7 >@G6,`. ll V6Vi
-				I Zl `
-			6=D6i
-				C2:D6 tI46AE:@?WVx?G2=:5 5:C64E:@?i TDV T C6ACW>@G6XX
+			if move[1] == 'w':
+				x -= 1
+			elif move[1] == 'e':
+				x += 1
+			else:
+				raise Exception('Invalid direction: %s' % repr(move))
 
-		DE6AD l I Z >2IWJ \ I ^^ a[ _X
-		>@DE072C l >2IWDE6AD[ >@DE072CX
+		steps = x + max(y - x // 2, 0)
+		most_far = max(steps, most_far)
 
-	AC:?EWVu:?2= A@D:E:@? )i T5[ *i T5V T WI[ JXX
-	AC:?EWV$E6AD C6BF:C65i T5V T DE6ADX
-	AC:?EWV|@DE 72Ci T5V T >@DE072CX
+	print('Final position X: %d, Y: %d' % (x, y))
+	print('Steps required: %d' % steps)
+	print('Most far: %d' % most_far)

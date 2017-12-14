@@ -1,84 +1,84 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ s2J `ai s:8:E2= !=F>36C \\\
+# --- Day 12: Digital Plumber ---
 
-R (2=<:?8 2=@?8 E96 >6>@CJ 32?<D @7 E96 DEC62>[ J@F 7:?5 2 D>2== G:==286 E92E :D 6IA6C:6?4:?8 2 =:EE=6 4@?7FD:@?i D@>6 AC@8C2>D 42?VE 4@>>F?:42E6 H:E9 6249 @E96C]
+# Walking along the memory banks of the stream, you find a small village that is experiencing a little confusion: some programs can't communicate with each other.
 
-R !C@8C2>D :? E9:D G:==286 4@>>F?:42E6 FD:?8 2 7:I65 DJDE6> @7 A:A6D] |6DD286D 2C6 A2DD65 36EH66? AC@8C2>D FD:?8 E96D6 A:A6D[ 3FE >@DE AC@8C2>D 2C6?VE 4@??64E65 E@ 6249 @E96C 5:C64E=J] x?DE625[ AC@8C2>D A2DD >6DD286D 36EH66? 6249 @E96C F?E:= E96 >6DD286 C62496D E96 :?E6?565 C64:A:6?E]
+# Programs in this village communicate using a fixed system of pipes. Messages are passed between programs using these pipes, but most programs aren't connected to each other directly. Instead, programs pass messages between each other until the message reaches the intended recipient.
 
-R u@C D@>6 C62D@?[ E9@F89[ D@>6 @7 E96D6 >6DD286D 2C6?VE 6G6C C6249:?8 E96:C :?E6?565 C64:A:6?E[ 2?5 E96 AC@8C2>D DFDA64E E92E D@>6 A:A6D 2C6 >:DD:?8] %96J H@F=5 =:<6 J@F E@ :?G6DE:82E6]
+# For some reason, though, some of these messages aren't ever reaching their intended recipient, and the programs suspect that some pipes are missing. They would like you to investigate.
 
-R *@F H2=< E9C@F89 E96 G:==286 2?5 C64@C5 E96 xs @7 6249 AC@8C2> 2?5 E96 xsD H:E9 H9:49 :E 42? 4@>>F?:42E6 5:C64E=J WJ@FC AFKK=6 :?AFEX] t249 AC@8C2> 92D @?6 @C >@C6 AC@8C2>D H:E9 H9:49 :E 42? 4@>>F?:42E6[ 2?5 E96D6 A:A6D 2C6 3:5:C64E:@?2=j :7 g D2JD :E 42? 4@>>F?:42E6 H:E9 ``[ E96? `` H:== D2J :E 42? 4@>>F?:42E6 H:E9 g]
+# You walk through the village and record the ID of each program and the IDs with which it can communicate directly (your puzzle input). Each program has one or more programs with which it can communicate, and these pipes are bidirectional; if 8 says it can communicate with 11, then 11 will say it can communicate with 8.
 
-R *@F ?665 E@ 7:8FC6 @FE 9@H >2?J AC@8C2>D 2C6 :? E96 8C@FA E92E 4@?E2:?D AC@8C2> xs _]
+# You need to figure out how many programs are in the group that contains program ID 0.
 
-R u@C 6I2>A=6[ DFAA@D6 J@F 8@ 5@@C\E@\5@@C =:<6 2 EC2G6==:?8 D2=6D>2? 2?5 C64@C5 E96 7@==@H:?8 =:DEi
+# For example, suppose you go door-to-door like a travelling salesman and record the following list:
 
-R _ k\m a
-R ` k\m `
-R a k\m _[ b[ c
-R b k\m a[ c
-R c k\m a[ b[ e
-R d k\m e
-R e k\m c[ d
+# 0 <-> 2
+# 1 <-> 1
+# 2 <-> 0, 3, 4
+# 3 <-> 2, 4
+# 4 <-> 2, 3, 6
+# 5 <-> 6
+# 6 <-> 4, 5
 
-R x? E9:D 6I2>A=6[ E96 7@==@H:?8 AC@8C2>D 2C6 :? E96 8C@FA E92E 4@?E2:?D AC@8C2> xs _i
+# In this example, the following programs are in the group that contains program ID 0:
 
-    R !C@8C2> _ 3J 567:?:E:@?]
-    R !C@8C2> a[ 5:C64E=J 4@??64E65 E@ AC@8C2> _]
-    R !C@8C2> b G:2 AC@8C2> a]
-    R !C@8C2> c G:2 AC@8C2> a]
-    R !C@8C2> d G:2 AC@8C2>D e[ E96? c[ E96? a]
-    R !C@8C2> e G:2 AC@8C2>D c[ E96? a]
+    # Program 0 by definition.
+    # Program 2, directly connected to program 0.
+    # Program 3 via program 2.
+    # Program 4 via program 2.
+    # Program 5 via programs 6, then 4, then 2.
+    # Program 6 via programs 4, then 2.
 
-R %96C67@C6[ 2 E@E2= @7 e AC@8C2>D 2C6 :? E9:D 8C@FAj 2== 3FE AC@8C2> `[ H9:49 92D 2 A:A6 E92E 4@??64ED :E E@ :ED6=7]
+# Therefore, a total of 6 programs are in this group; all but program 1, which has a pipe that connects it to itself.
 
-R w@H >2?J AC@8C2>D 2C6 :? E96 8C@FA E92E 4@?E2:?D AC@8C2> xs _n
+# How many programs are in the group that contains program ID 0?
 
-R \\\ !2CE %H@ \\\
+# --- Part Two ---
 
-R %96C6 2C6 >@C6 AC@8C2>D E92? ;FDE E96 @?6D :? E96 8C@FA 4@?E2:?:?8 AC@8C2> xs _] %96 C6DE @7 E96> 92G6 ?@ H2J @7 C6249:?8 E92E 8C@FA[ 2?5 DE:== >:89E 92G6 ?@ H2J @7 C6249:?8 6249 @E96C]
+# There are more programs than just the ones in the group containing program ID 0. The rest of them have no way of reaching that group, and still might have no way of reaching each other.
 
-R p 8C@FA :D 2 4@==64E:@? @7 AC@8C2>D E92E 42? 2== 4@>>F?:42E6 G:2 A:A6D 6:E96C 5:C64E=J @C :?5:C64E=J] %96 AC@8C2>D J@F :56?E:7:65 ;FDE 2 >@>6?E 28@ 2C6 2== A2CE @7 E96 D2>6 8C@FA] }@H[ E96J H@F=5 =:<6 J@F E@ 56E6C>:?6 E96 E@E2= ?F>36C @7 8C@FAD]
+# A group is a collection of programs that can all communicate via pipes either directly or indirectly. The programs you identified just a moment ago are all part of the same group. Now, they would like you to determine the total number of groups.
 
-R x? E96 6I2>A=6 23@G6[ E96C6 H6C6 a 8C@FADi @?6 4@?D:DE:?8 @7 AC@8C2>D _[a[b[c[d[e[ 2?5 E96 @E96C 4@?D:DE:?8 D@=6=J @7 AC@8C2> `]
+# In the example above, there were 2 groups: one consisting of programs 0,2,3,4,5,6, and the other consisting solely of program 1.
 
-R w@H >2?J 8C@FAD 2C6 E96C6 :? E@E2=n
+# How many groups are there in total?
 
-:>A@CE DJD
-:>A@CE C6
+import sys
+import re
 
-EC66 l 5:4EWX
+tree = dict()
 
-7@C =:?6 :? DJD]DE5:?i
-	>2E49 l C6]>2E49WCVW-5ZX k\m WWni-5Z[ XY-5ZXV[ =:?6]DEC:AWXX
-	:7 ?@E >2E49i
-		4@?E:?F6
+for line in sys.stdin:
+	match = re.match(r'(\d+) <-> ((?:\d+, )*\d+)', line.strip())
+	if not match:
+		continue
 
-	A2C6?E l :?EW>2E49]8C@FAW`XX
-	49:=5C6? l EFA=6W:?EWIX 7@C I :? >2E49]8C@FAWaX]DA=:EWV[ VXX
+	parent = int(match.group(1))
+	children = tuple(int(x) for x in match.group(2).split(', '))
 
-	EC66,A2C6?E. l 49:=5C6?
+	tree[parent] = children
 
-R 9EEAi^^6773@E]@C8^K@?6^5672F=E\G2=F6D]9E>
-R %9:D :D H9J 4@??64E65 :D?VE :?:E:2=:K65 E@ l D6EWX
-567 7:?504@??64E65WEC66[ A2C6?E[ 4@??64E65Xi
-	:7 A2C6?E ?@E :? 4@??64E65i
-		4@??64E65]255WA2C6?EX
+# http://effbot.org/zone/default-values.htm
+# This is why connected isn't initialized to = set()
+def find_connected(tree, parent, connected):
+	if parent not in connected:
+		connected.add(parent)
 
-		7@C 49:=5 :? EC66,A2C6?E.i
-			7:?504@??64E65WEC66[ 49:=5[ 4@??64E65X
+		for child in tree[parent]:
+			find_connected(tree, child, connected)
 
-8C@FA04@F?E l _
-?@56D0:?08C@FAD l D6EWX
-7@C A2C6?E :? EC66]<6JDWXi
-	:7 A2C6?E ?@E :? ?@56D0:?08C@FADi
-		4@??64E65 l D6EWX
-		7:?504@??64E65WEC66[ A2C6?E[ 4@??64E65X
+group_count = 0
+nodes_in_groups = set()
+for parent in tree.keys():
+	if parent not in nodes_in_groups:
+		connected = set()
+		find_connected(tree, parent, connected)
 
-		AC:?EWVvC@FA T5i TDV T W8C@FA04@F?E[ C6ACW4@??64E65XXX
+		print('Group %d: %s' % (group_count, repr(connected)))
 
-		8C@FA04@F?E Zl `
-		?@56D0:?08C@FAD Ml 4@??64E65
+		group_count += 1
+		nodes_in_groups |= connected
 
-AC:?EWV%@E2= 8C@FA 4@F?Ei T5V T 8C@FA04@F?EX
+print('Total group count: %d' % group_count)

@@ -1,40 +1,40 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ !2CE %H@ \\\
+# --- Part Two ---
 
-R QvC62E H@C<j =@@<D =:<6 H6VC6 @? E96 C:89E EC24< 27E6C 2==] w6C6VD 2 DE2C 7@C J@FC 677@CE]Q w@H6G6C[ E96 AC@8C2> D66>D 2 =:EE=6 H@CC:65] r2? AC@8C2>D 36 H@CC:65n
+# "Great work; looks like we're on the right track after all. Here's a star for your effort." However, the program seems a little worried. Can programs be worried?
 
-R Qq2D65 @? H92E H6VC6 D66:?8[ :E =@@<D =:<6 2== E96 &D6C H2?E65 :D D@>6 :?7@C>2E:@? 23@FE E96 6G6?=J 5:G:D:3=6 G2=F6D :? E96 DAC625D966E] &?7@CEF?2E6=J[ ?@?6 @7 FD 2C6 6BF:AA65 7@C E92E <:?5 @7 42=4F=2E:@? \ >@DE @7 FD DA64:2=:K6 :? 3:EH:D6 @A6C2E:@?D]Q
+# "Based on what we're seeing, it looks like all the User wanted is some information about the evenly divisible values in the spreadsheet. Unfortunately, none of us are equipped for that kind of calculation - most of us specialize in bitwise operations."
 
-R xE D@F?5D =:<6 E96 8@2= :D E@ 7:?5 E96 @?=J EH@ ?F>36CD :? 6249 C@H H96C6 @?6 6G6?=J 5:G:56D E96 @E96C \ E92E :D[ H96C6 E96 C6DF=E @7 E96 5:G:D:@? @A6C2E:@? :D 2 H9@=6 ?F>36C] %96J H@F=5 =:<6 J@F E@ 7:?5 E9@D6 ?F>36CD @? 6249 =:?6[ 5:G:56 E96>[ 2?5 255 FA 6249 =:?6VD C6DF=E]
+# It sounds like the goal is to find the only two numbers in each row where one evenly divides the other - that is, where the result of the division operation is a whole number. They would like you to find those numbers on each line, divide them, and add up each line's result.
 
-R u@C 6I2>A=6[ 8:G6? E96 7@==@H:?8 DAC625D966Ei
+# For example, given the following spreadsheet:
 
-R d h a g
-R h c f b
-R b g e d
+# 5 9 2 8
+# 9 4 7 3
+# 3 8 6 5
 
-    R x? E96 7:CDE C@H[ E96 @?=J EH@ ?F>36CD E92E 6G6?=J 5:G:56 2C6 g 2?5 aj E96 C6DF=E @7 E9:D 5:G:D:@? :D c]
-    R x? E96 D64@?5 C@H[ E96 EH@ ?F>36CD 2C6 h 2?5 bj E96 C6DF=E :D b]
-    R x? E96 E9:C5 C@H[ E96 C6DF=E :D a]
+    # In the first row, the only two numbers that evenly divide are 8 and 2; the result of this division is 4.
+    # In the second row, the two numbers are 9 and 3; the result is 3.
+    # In the third row, the result is 2.
 
-R x? E9:D 6I2>A=6[ E96 DF> @7 E96 C6DF=ED H@F=5 36 c Z b Z a l h]
+# In this example, the sum of the results would be 4 + 3 + 2 = 9.
 
-R (92E :D E96 DF> @7 6249 C@HVD C6DF=E :? J@FC AFKK=6 :?AFEn
+# What is the sum of each row's result in your puzzle input?
 
-:>A@CE DJD
+import sys
 
-4964<DF> l _
+checksum = 0
 
-7@C =:?6 :? DJD]DE5:?i 
-	=:?6 l ,:?EWIX 7@C I :? =:?6]DA=:EWX.
+for line in sys.stdin: 
+	line = [int(x) for x in line.split()]
 
-	7@C A@D :? C2?86W=6?W=:?6XXi
-		7@C A@Da :? C2?86W=6?W=:?6XXi
-			:7 A@D ll A@Dai
-				4@?E:?F6
+	for pos in range(len(line)):
+		for pos2 in range(len(line)):
+			if pos == pos2:
+				continue
 
-			:7 =:?6,A@D. T =:?6,A@Da. ll _i
-				4964<DF> Zl =:?6,A@D. ^^ =:?6,A@Da.
+			if line[pos] % line[pos2] == 0:
+				checksum += line[pos] // line[pos2]
 
-AC:?EW4964<DF>X
+print(checksum)

@@ -1,35 +1,35 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ !2CE %H@ \\\
+# --- Part Two ---
 
-R u@C 25565 D64FC:EJ[ J6E 2?@E96C DJDE6> A@=:4J 92D 366? AFE :? A=246] }@H[ 2 G2=:5 A2DDA9C2D6 >FDE 4@?E2:? ?@ EH@ H@C5D E92E 2C6 2?28C2>D @7 6249 @E96C \ E92E :D[ 2 A2DDA9C2D6 :D :?G2=:5 :7 2?J H@C5VD =6EE6CD 42? 36 C62CC2?865 E@ 7@C> 2?J @E96C H@C5 :? E96 A2DDA9C2D6]
+# For added security, yet another system policy has been put in place. Now, a valid passphrase must contain no two words that are anagrams of each other - that is, a passphrase is invalid if any word's letters can be rearranged to form any other word in the passphrase.
 
-R u@C 6I2>A=6i
+# For example:
 
-    R 23456 789:; :D 2 G2=:5 A2DDA9C2D6]
-    R 23456 IJK 64523 :D ?@E G2=:5 \ E96 =6EE6CD 7C@> E96 E9:C5 H@C5 42? 36 C62CC2?865 E@ 7@C> E96 7:CDE H@C5]
-    R 2 23 234 235 237 23; :D 2 G2=:5 A2DDA9C2D6[ 3642FD6 2== =6EE6CD ?665 E@ 36 FD65 H96? 7@C>:?8 2?@E96C H@C5]
-    R :::: @::: @@:: @@@: @@@@ :D G2=:5]
-    R @::: :@:: ::@: :::@ :D ?@E G2=:5 \ 2?J @7 E96D6 H@C5D 42? 36 C62CC2?865 E@ 7@C> 2?J @E96C H@C5]
+    # abcde fghij is a valid passphrase.
+    # abcde xyz ecdab is not valid - the letters from the third word can be rearranged to form the first word.
+    # a ab abc abd abf abj is a valid passphrase, because all letters need to be used when forming another word.
+    # iiii oiii ooii oooi oooo is valid.
+    # oiii ioii iioi iiio is not valid - any of these words can be rearranged to form any other word.
 
-R &?56C E9:D ?6H DJDE6> A@=:4J[ 9@H >2?J A2DDA9C2D6D 2C6 G2=:5n
+# Under this new system policy, how many passphrases are valid?
 
-:>A@CE DJD
+import sys
 
-G2=:5 l _
-7@C A2DDA9C2D6 :? DJD]DE5:?i
-	H@C5D l ,VV];@:?WD@CE65WH@C5XX 7@C H@C5 :? A2DDA9C2D6]DA=:EWX.
+valid = 0
+for passphrase in sys.stdin:
+	words = [''.join(sorted(word)) for word in passphrase.split()]
 
-	:7 =6?WH@C5DX ll _i
-		4@?E:?F6
+	if len(words) == 0:
+		continue
 
-	H@C5D]D@CEWX
-	=2DE l H@C5D,_.
-	7@C H@C5 :? H@C5D,`i.i
-		:7 H@C5 ll =2DEi
-			3C62<
-		=2DE l H@C5
-	6=D6i
-		G2=:5 Zl `
+	words.sort()
+	last = words[0]
+	for word in words[1:]:
+		if word == last:
+			break
+		last = word
+	else:
+		valid += 1
 
-AC:?EWG2=:5X
+print(valid)

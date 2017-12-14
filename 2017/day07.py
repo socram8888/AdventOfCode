@@ -1,94 +1,94 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-:>A@CE DJD
-:>A@CE C6
+import sys
+import re
 
-4=2DD }@56x?7@i
-	567 00:?:E00WD6=7[ ?2>6[ H6:89E[ 49:=5C6?Xi
-		D6=7]?2>6 l ?2>6
-		D6=7]H6:89E l H6:89E
-		D6=7]49:=5C6? l 49:=5C6?
-		D6=7]E@E2=0H6:89E l }@?6
+class NodeInfo:
+	def __init__(self, name, weight, children):
+		self.name = name
+		self.weight = weight
+		self.children = children
+		self.total_weight = None
 
-	567 00C6AC00WD6=7Xi
-		C6EFC? V}@56x?7@W?2>6lTD[ H6:89ElTD[ E@E2=0H6:89ElTDXV T W
-				C6ACWD6=7]?2>6X[
-				C6ACWD6=7]H6:89EX[
-				C6ACWD6=7]E@E2=0H6:89EX
-		X
+	def __repr__(self):
+		return 'NodeInfo(name=%s, weight=%s, total_weight=%s)' % (
+				repr(self.name),
+				repr(self.weight),
+				repr(self.total_weight)
+		)
 
-	567 ?2>60E@0C676C6?46DWD6=7[ ?@56:?7@Xi
-		D6=7]49:=5C6? l ,?@56:?7@,?2>6. 7@C ?2>6 :? D6=7]49:=5C6?.
-		7@C 49:=5 :? D6=7]49:=5C6?i
-			49:=5]?2>60E@0C676C6?46DW?@56:?7@X
+	def name_to_references(self, nodeinfo):
+		self.children = [nodeinfo[name] for name in self.children]
+		for child in self.children:
+			child.name_to_references(nodeinfo)
 
-	567 42=4F=2E60E@E2=WD6=7Xi
-		E@E2= l D6=7]H6:89E
+	def calculate_total(self):
+		total = self.weight
 
-		7@C 49:=5 :? D6=7]49:=5C6?i
-			E@E2= Zl 49:=5]42=4F=2E60E@E2=WX
+		for child in self.children:
+			total += child.calculate_total()
 
-		D6=7]E@E2=0H6:89E l E@E2=
-		C6EFC? E@E2=
+		self.total_weight = total
+		return total
 
-	567 7:I0F?32=2?465WD6=7[ E2C86E0H6:89El}@?6Xi
-		:7 =6?WD6=7]49:=5C6?X ml ai
-			D@CE65049:=5 l D@CE65WD6=7]49:=5C6?[ <6Jl=2>352 Ii I]E@E2=0H6:89EX
-			7:CDE l D@CE65049:=5,_.
-			=2DE l D@CE65049:=5,\`.
-			@E96C l D@CE65049:=5,`.
+	def fix_unbalanced(self, target_weight=None):
+		if len(self.children) >= 2:
+			sorted_child = sorted(self.children, key=lambda x: x.total_weight)
+			first = sorted_child[0]
+			last = sorted_child[-1]
+			other = sorted_child[1]
 
-			:7 7:CDE]E@E2=0H6:89E Pl =2DE]E@E2=0H6:89Ei
-				:7 7:CDE]E@E2=0H6:89E ll @E96C]E@E2=0H6:89Ei
-					C6EFC? =2DE]7:I0F?32=2?465W@E96C]E@E2=0H6:89EX
-				6=D6i
-					C6EFC? 7:CDE]7:I0F?32=2?465W@E96C]E@E2=0H6:89EX
+			if first.total_weight != last.total_weight:
+				if first.total_weight == other.total_weight:
+					return last.fix_unbalanced(other.total_weight)
+				else:
+					return first.fix_unbalanced(other.total_weight)
 
-		D6=7]H6:89E \l D6=7]E@E2=0H6:89E \ E2C86E0H6:89E
-		D6=7]E@E2=0H6:89E l E2C86E0H6:89E
+		self.weight -= self.total_weight - target_weight
+		self.total_weight = target_weight
 
-		C6EFC? D6=7
+		return self
 
-	567 AC:?E0EC66WD6=7[ 56AE9l_Xi
-		:7 56AE9 m _i
-			AC:?EWV  V Y W56AE9 \ `X Z V└ V[ 6?5lVVX
-		AC:?EWC6ACWD6=7XX
+	def print_tree(self, depth=0):
+		if depth > 0:
+			print('  ' * (depth - 1) + '└ ', end='')
+		print(repr(self))
 
-		7@C 49:=5 :? D6=7]49:=5C6?i
-			49:=5]AC:?E0EC66W56AE9 Z `X
+		for child in self.children:
+			child.print_tree(depth + 1)
 
-A2C6?ED l 5:4EWX
-?@56:?7@ l 5:4EWX
+parents = dict()
+nodeinfo = dict()
 
-7@C :?7@ :? DJD]DE5:?i
-	>2E49 l C6]>2E49WCVW-HZX -WW-5ZX-XWni \m W]YXXnV[ :?7@X
-	:7 ?@E >2E49i
-		4@?E:?F6
+for info in sys.stdin:
+	match = re.match(r'(\w+) \((\d+)\)(?: -> (.*))?', info)
+	if not match:
+		continue
 
-	?2>6 l >2E49]8C@FAW`X
-	H6:89E l :?EW>2E49]8C@FAWaXX
+	name = match.group(1)
+	weight = int(match.group(2))
 
-	49:=5C6? l >2E49]8C@FAWbX
-	:7 49:=5C6?i
-		49:=5C6? l 49:=5C6?]DEC:AWX]DA=:EWV[ VX
-		7@C 49:=5 :? 49:=5C6?i
-			A2C6?ED,49:=5. l ?2>6
-	6=D6i
-		49:=5C6? l ,.
+	children = match.group(3)
+	if children:
+		children = children.strip().split(', ')
+		for child in children:
+			parents[child] = name
+	else:
+		children = []
 
-	?@56:?7@,?2>6. l }@56x?7@W?2>6[ :?EWH6:89EX[ 49:=5C6?X
+	nodeinfo[name] = NodeInfo(name, int(weight), children)
 
-E@A?@56 l ?6IEW:E6CWA2C6?ED]G2=F6DWXXX
-H9:=6 E@A?@56 :? A2C6?EDi
-	E@A?@56 l A2C6?ED,E@A?@56.
-E@A?@56 l ?@56:?7@,E@A?@56.
+topnode = next(iter(parents.values()))
+while topnode in parents:
+	topnode = parents[topnode]
+topnode = nodeinfo[topnode]
 
-AC:?EWV%@A ?@56i V Z C6ACWF?32=2?465XX
+print('Top node: ' + repr(unbalanced))
 
-E@A?@56]?2>60E@0C676C6?46DW?@56:?7@X
-E@A?@56]42=4F=2E60E@E2=WX
+topnode.name_to_references(nodeinfo)
+topnode.calculate_total()
 
-F?32=2?465 l E@A?@56]7:I0F?32=2?465WX
-AC:?EWV&?32=2?465i V Z C6ACWF?32=2?465XX
+unbalanced = topnode.fix_unbalanced()
+print('Unbalanced: ' + repr(unbalanced))
 
-E@A?@56]AC:?E0EC66WX
+topnode.print_tree()

@@ -1,30 +1,27 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-:>A@CE DJD
+# I love knots so much, this had to have its own file
 
-=6?8E9D l DJD]DE5:?]3F776C]C625WX Z 3JE6DW,`f[ b`[ fb[ cf[ ab.X
+def knothash(lengths):
+	lengths = lengths + bytes([17, 31, 73, 47, 23])
 
-DA2CD6 l =:DEWC2?86WadeXX
-@77D6E l _
-D<:A l _
-7@C :E6C2E:@? :? C2?86WecXi
-	7@C =6?8E9 :? =6?8E9Di
-		RAC:?EWVT5 $i TDV T W=6?8E9[ C6ACWDA2CD6XXX
+	sparse = list(range(256))
+	offset = 0
+	skip = 0
+	for iteration in range(64):
+		for length in lengths:
+			for pos in range(length // 2):
+				pos_a = (offset + pos) % 256
+				pos_b = (offset + length - pos - 1) % 256
 
-		7@C A@D :? C2?86W=6?8E9 ^^ aXi
-			A@D02 l W@77D6E Z A@DX T ade
-			A@D03 l W@77D6E Z =6?8E9 \ A@D \ `X T ade
+				# Swap them
+				sparse[pos_a], sparse[pos_b] = sparse[pos_b], sparse[pos_a]
 
-			R $H2A E96>
-			DA2CD6,A@D02.[ DA2CD6,A@D03. l DA2CD6,A@D03.[ DA2CD6,A@D02.
+			offset = (offset + length + skip) % 256
+			skip = (skip + 1) % 256
 
-		@77D6E l W@77D6E Z =6?8E9 Z D<:AX T ade
-		D<:A l WD<:A Z `X T ade
-	
-	RAC:?EWVxE6C T5i TDV T W:E6C2E:@?[ C6ACWDA2CD6XXX
+	knots = bytearray(16)
+	for pos in range(256):
+		knots[pos // 16] ^= sparse[pos]
 
-<?@ED l 3JE62CC2JW`eX
-7@C A@D :? C2?86WadeXi
-	<?@ED,A@D ^^ `e. /l DA2CD6,A@D.
-
-AC:?EW<?@ED]96IWXX
+	return knots

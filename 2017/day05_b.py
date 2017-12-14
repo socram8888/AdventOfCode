@@ -1,24 +1,24 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ !2CE %H@ \\\
+# --- Part Two ---
 
-R }@H[ E96 ;F>AD 2C6 6G6? DEC2?86Ci 27E6C 6249 ;F>A[ :7 E96 @77D6E H2D E9C66 @C >@C6[ :?DE625 564C62D6 :E 3J `] ~E96CH:D6[ :?4C62D6 :E 3J ` 2D 367@C6]
+# Now, the jumps are even stranger: after each jump, if the offset was three or more, instead decrease it by 1. Otherwise, increase it by 1 as before.
 
-R &D:?8 E9:D CF=6 H:E9 E96 23@G6 6I2>A=6[ E96 AC@46DD ?@H E2<6D `_ DE6AD[ 2?5 E96 @77D6E G2=F6D 27E6C 7:?5:?8 E96 6I:E 2C6 =67E 2D a b a b \`]
+# Using this rule with the above example, the process now takes 10 steps, and the offset values after finding the exit are left as 2 3 2 3 -1.
 
-R w@H >2?J DE6AD 5@6D :E ?@H E2<6 E@ C6249 E96 6I:En
+# How many steps does it now take to reach the exit?
 
-:>A@CE DJD
+import sys
 
->6>@CJ l ,:?EW=:?6X 7@C =:?6 :? DJD]DE5:?.
-A4 l _
-DE6AD l _
+memory = [int(line) for line in sys.stdin]
+pc = 0
+steps = 0
 
-H9:=6 A4 ml _ 2?5 A4 k =6?W>6>@CJXi
-	@=50A4 l A4
-	A4 Zl >6>@CJ,A4.
+while pc >= 0 and pc < len(memory):
+	old_pc = pc
+	pc += memory[pc]
 
-	>6>@CJ,@=50A4. Zl W` :7 >6>@CJ,@=50A4. k b 6=D6 \`X
-	DE6AD Zl `
+	memory[old_pc] += (1 if memory[old_pc] < 3 else -1)
+	steps += 1
 
-AC:?EWDE6ADX
+print(steps)

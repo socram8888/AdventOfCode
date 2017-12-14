@@ -1,35 +1,35 @@
-RP^FDC^3:?^6?G AJE9@?b
+#!/usr/bin/env python3
 
-R \\\ s2J ci w:89\t?EC@AJ !2DDA9C2D6D \\\
+# --- Day 4: High-Entropy Passphrases ---
 
-R p ?6H DJDE6> A@=:4J 92D 366? AFE :? A=246 E92E C6BF:C6D 2== 244@F?ED E@ FD6 2 A2DDA9C2D6 :?DE625 @7 D:>A=J 2 A2DDH@C5] p A2DDA9C2D6 4@?D:DED @7 2 D6C:6D @7 H@C5D W=@H6C42D6 =6EE6CDX D6A2C2E65 3J DA246D]
+# A new system policy has been put in place that requires all accounts to use a passphrase instead of simply a password. A passphrase consists of a series of words (lowercase letters) separated by spaces.
 
-R %@ 6?DFC6 D64FC:EJ[ 2 G2=:5 A2DDA9C2D6 >FDE 4@?E2:? ?@ 5FA=:42E6 H@C5D]
+# To ensure security, a valid passphrase must contain no duplicate words.
 
-R u@C 6I2>A=6i
+# For example:
 
-    R 22 33 44 55 66 :D G2=:5]
-    R 22 33 44 55 22 :D ?@E G2=:5 \ E96 H@C5 22 2AA62CD >@C6 E92? @?46]
-    R 22 33 44 55 222 :D G2=:5 \ 22 2?5 222 4@F?E 2D 5:776C6?E H@C5D]
+    # aa bb cc dd ee is valid.
+    # aa bb cc dd aa is not valid - the word aa appears more than once.
+    # aa bb cc dd aaa is valid - aa and aaa count as different words.
 
-R %96 DJDE6>VD 7F== A2DDA9C2D6 =:DE :D 2G2:=23=6 2D J@FC AFKK=6 :?AFE] w@H >2?J A2DDA9C2D6D 2C6 G2=:5n
+# The system's full passphrase list is available as your puzzle input. How many passphrases are valid?
 
-:>A@CE DJD
+import sys
 
-G2=:5 l _
-7@C A2DDA9C2D6 :? DJD]DE5:?i
-	H@C5D l A2DDA9C2D6]DA=:EWX
+valid = 0
+for passphrase in sys.stdin:
+	words = passphrase.split()
 
-	:7 =6?WH@C5DX ll _i
-		4@?E:?F6
+	if len(words) == 0:
+		continue
 
-	H@C5D]D@CEWX
-	=2DE l H@C5D,_.
-	7@C H@C5 :? H@C5D,`i.i
-		:7 H@C5 ll =2DEi
-			3C62<
-		=2DE l H@C5
-	6=D6i
-		G2=:5 Zl `
+	words.sort()
+	last = words[0]
+	for word in words[1:]:
+		if word == last:
+			break
+		last = word
+	else:
+		valid += 1
 
-AC:?EWG2=:5X
+print(valid)
