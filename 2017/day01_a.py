@@ -27,14 +27,12 @@ import sys
 
 for line in sys.stdin:
 	line = line.strip()
-	line += line[0]
 
 	sum = 0
-	previous = -1
+	previous = line[-1]
 	for digit in line:
-		cur = int(digit)
-		if cur == previous:
-			sum += cur
-		previous = cur
+		if digit == previous:
+			sum += int(digit)
+		previous = digit
 
 	print(sum)

@@ -23,8 +23,8 @@ for line in sys.stdin:
 
 	sum = 0
 	half = len(line) // 2
-	for pos in range(0, half):
-		if line[pos] == line[half + pos]:
-			sum += 2 * int(line[pos])
+	for a, b in zip(line[:half], line[half:]):
+		if a == b:
+			sum += 2 * int(a)
 
 	print(sum)
